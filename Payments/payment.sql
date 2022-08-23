@@ -62,3 +62,41 @@ CREATE TABLE Transaction (
     FOREIGN KEY(bill_id) REFERENCES Bill(bill_id)
 );
 
+
+INSERT INTO Role VALUES(1,1);
+
+INSERT INTO Role VALUES(2,2);
+INSERT INTO Account VALUES(1,100,'Anuj Kotarkar','anuj@gmail.com',90000);
+INSERT INTO User VALUES(100,'password',2,1);
+
+INSERT INTO Role VALUES(3,2);
+INSERT INTO Account VALUES(2,101,'Prem Chhabria','prem@gmail.com',92000);
+INSERT INTO User VALUES(101,'password',3,2);
+
+INSERT INTO Role VALUES(4,2);
+INSERT INTO Account VALUES(3,102,'Rutuja More','rutuja@gmail.com',89000);
+INSERT INTO User VALUES(102,'password',4,3);
+
+INSERT INTO Role VALUES(5,2);
+INSERT INTO Account VALUES(4,103,'Swapnil Ghule','swapnil@gmail.com',90000);
+INSERT INTO User VALUES(103,'password',5,4);
+
+INSERT INTO Role VALUES(6,2);
+INSERT INTO Account VALUES(5,104,'Nishtha Sehgal','nishtha@gmail.com',90000);
+INSERT INTO User VALUES(104,'password',6,5);
+
+INSERT INTO Role VALUES(7,2);
+INSERT INTO Account VALUES(6,105,'Vaishnavi Deokate','vaishnavi@gmail.com',90000);
+INSERT INTO User VALUES(105,'password',7,6);
+
+INSERT INTO Role VALUES(8,2);
+INSERT INTO Account VALUES(7,106,'Sumit Raut','sumit@gmail.com',90000);
+INSERT INTO User VALUES(106,'password',8,7);
+
+INSERT INTO Role VALUES(9,2);
+INSERT INTO Account VALUES(8,107,'Vinod','vinod@gmail.com',90000);
+INSERT INTO User VALUES(107,'password',9,8);
+
+INSERT INTO Role VALUES(10,2);
+INSERT INTO Account VALUES(9,108,'Sravya','sravya@gmail.com',90000);
+INSERT INTO User VALUES(108,'password',10,9);
