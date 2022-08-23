@@ -1,0 +1,10 @@
+1) User Login
+2) Bank manager: Create Bills
+3) Account holder: Create Registered Billers (Auto Pay)
+4) Account holder: View Registered Billers
+5) Account holder: Delete Registered Billers
+6) Account holder: View Bills/Scheduled Payments (Due Date)
+7) Account holder: Manual Payment (Override Auto Pay)
+8) Account holder: View/Export Past payments (date range / biller) (csv)
+9) Auto Pay (Scheduler) (Auto Pay - true?, limit, due date, status)
+10) E-mail Provision: (3), (8)
