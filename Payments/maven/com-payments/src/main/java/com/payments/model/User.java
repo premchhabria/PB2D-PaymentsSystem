@@ -33,6 +33,10 @@ public class User {
 		this.role_id = role_id;
 	}
 
+	public User(boolean b, String string) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getLogin_id() {
 		return login_id;
 	}

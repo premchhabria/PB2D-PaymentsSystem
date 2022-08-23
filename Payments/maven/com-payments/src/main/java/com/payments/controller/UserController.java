@@ -24,22 +24,20 @@ public class UserController {
 
 	// http://localhost:9999/add-user
 
-	@RequestMapping(value = "/add-user", method = RequestMethod.POST, 
-			produces = MediaType.APPLICATION_JSON_VALUE, 
-			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<User> addUser(@RequestBody User user) {
-		HttpStatus status = HttpStatus.CREATED;
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("message", "user added successfully.");
-		ResponseEntity<User> response = new ResponseEntity<>(userService.addUser(user), headers, status);
-		return response;
-	}
-	
 //	@RequestMapping(value = "/add-user", method = RequestMethod.POST, 
-//			produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-//	public User addUser(@RequestBody User user) {
-//		System.out.println(user.toString());
-//		return user;
+//			produces = MediaType.APPLICATION_JSON_VALUE, 
+//			consumes = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<User> addUser(@RequestBody User user) {
+//		HttpStatus status = HttpStatus.CREATED;
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.add("message", "user added successfully.");
+//		ResponseEntity<User> response = new ResponseEntity<>(userService.addUser(user), headers, status);
+//		return response;
 //	}
-	
+
+//	@RequestMapping(value = "/check-user", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+//	public User addUser(@RequestBody User user) {
+//		return userService.loginUser(user);
+//	}
+
 }

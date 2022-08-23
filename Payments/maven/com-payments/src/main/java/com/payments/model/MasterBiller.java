@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="MasterBiller")
+@Table(name="masterbiller")
 public class MasterBiller {
 	
 	@Id
