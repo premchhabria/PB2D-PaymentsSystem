@@ -34,13 +34,14 @@ CREATE TABLE MasterBiller (
 );
 
 CREATE TABLE RegisteredBiller (
-	biller_code CHAR(4) NOT NULL,
+	biller_id INT PRIMARY KEY NOT NULL,
+    biller_code CHAR(4) NOT NULL,
     consumer_no INT NOT NULL,
     account_no INT NOT NULL,
     autopay BOOL DEFAULT FALSE,
     autopay_limit DOUBLE DEFAULT NULL,
     FOREIGN KEY(biller_code) REFERENCES MasterBiller(biller_code),
-    PRIMARY KEY(biller_code, consumer_no)
+    UNIQUE(biller_code, consumer_no)
 );
 
 CREATE TABLE Bill (
