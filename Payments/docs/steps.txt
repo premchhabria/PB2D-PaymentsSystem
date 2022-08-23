@@ -1,0 +1,7 @@
+agile board filling
+swagger
+database
+dont use sop but use logger object
+presentations
+
+demo with agile board and ppt
