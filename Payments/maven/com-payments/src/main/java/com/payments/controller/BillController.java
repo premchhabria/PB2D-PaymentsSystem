@@ -21,7 +21,7 @@ public class BillController {
 	@Autowired
 	BillService billService;
 	@RequestMapping(value = "/get-all-bills", method = RequestMethod.GET, produces = { "application/json" })
-	public ResponseEntity<List<Bill>> getAllMBills() {
+	public ResponseEntity<List<Bill>> getAllBills() {
 		List<Bill> billList = billService.getAllBill();
 		HttpStatus status = HttpStatus.OK;
 		HttpHeaders headers = new HttpHeaders();
@@ -47,4 +47,45 @@ public class BillController {
 		ResponseEntity<Bill> response = new ResponseEntity<>(billService.addBill(bill), headers, status);
 		return response;
 	}
+	
+	@RequestMapping(value = "/get-by-consumer/{consumer_no}", method = RequestMethod.GET, produces = { "application/json" })
+	public ResponseEntity<List<Bill>> getByConsumer(@PathVariable(name = "consumer_no")int cons) {
+		List<Bill> billList = billService.getByConsumer(cons);
+		HttpStatus status = HttpStatus.OK;
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("message", "All Bills Filter by consumer returned successfully.");
+		ResponseEntity<List<Bill>> response = new ResponseEntity<>(billList, headers, status);
+		return response;
+	}
+	
+	@RequestMapping(value = "/get-scheduled-bill/{consumer_no}", method = RequestMethod.GET, produces = { "application/json" })
+	public ResponseEntity<List<Bill>> getScheduleBill(@PathVariable(name = "consumer_no")int cons) {
+		List<Bill> billList = billService.getScheduledBill(cons);
+		HttpStatus status = HttpStatus.OK;
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("message", "All Scheduled Bills returned successfully.");
+		ResponseEntity<List<Bill>> response = new ResponseEntity<>(billList, headers, status);
+		return response;
+	}
+	
+	@RequestMapping(value = "/get-unscheduled-bill/{consumer_no}", method = RequestMethod.GET, produces = { "application/json" })
+	public ResponseEntity<List<Bill>> getUnscheduledBill(@PathVariable(name = "consumer_no")int cons) {
+		List<Bill> billList = billService.getUnscheduledBill(cons);
+		HttpStatus status = HttpStatus.OK;
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("message", "All UnScheduled Bills returned successfully.");
+		ResponseEntity<List<Bill>> response = new ResponseEntity<>(billList, headers, status);
+		return response;
+	}
+	
+	@RequestMapping(value = "/get-by-due/{due}", method = RequestMethod.GET, produces = { "application/json" })
+	public ResponseEntity<List<Bill>> getByDue(@PathVariable(name = "due")String due) {
+		List<Bill> billList = billService.filterByDue(due);
+		HttpStatus status = HttpStatus.OK;
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("message", "All Bills Filter by due returned successfully.");
+		ResponseEntity<List<Bill>> response = new ResponseEntity<>(billList, headers, status);
+		return response;
+	}
+	
 }

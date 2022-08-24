@@ -28,4 +28,16 @@ public class BillService {
 		bill.setStatus("PAID");
 		return billRepository.save(bill);
 	}
+	public List<Bill> getByConsumer(int consumerNo){
+		return billRepository.findByConsumer(consumerNo);
+	}
+	public List<Bill> filterByDue(String due){
+		return billRepository.filterByDue(due);
+	}
+	public List<Bill> getScheduledBill(int consumerNo){
+		return billRepository.findScheduledBill(consumerNo);
+	}
+	public List<Bill> getUnscheduledBill(int consumerNo){
+		return billRepository.findUnscheduledBill(consumerNo);
+	}
 }
