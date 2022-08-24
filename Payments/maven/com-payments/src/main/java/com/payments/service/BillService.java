@@ -18,7 +18,9 @@ public class BillService {
 	}
 	
 	public Bill addBill(Bill bill) {
-		return billRepository.saveAndFlush(bill);
+		Bill billl = billRepository.saveAndFlush(bill);
+		
+		return getBillById(billl.getBill_id());
 	}
 	public Bill getBillById(int billId) {
 		return billRepository.findById(billId).get();

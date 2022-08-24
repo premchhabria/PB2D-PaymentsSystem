@@ -6,8 +6,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+//import org.springframework.transaction.annotation.Propagation;
+//import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,21 +43,24 @@ public class BillController {
 		return response;
 	}
 	
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public ResponseEntity<Bill> sideFunction(Bill bill){
-		HttpStatus status = HttpStatus.CREATED;
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("message", " bill added successfully.");
-		return new ResponseEntity<>(billService.addBill(bill), headers, status);
-	}
+//	@Transactional(propagation = Propagation.REQUIRES_NEW)
+//	public ResponseEntity<Bill> sideFunction(Bill bill){
+//		HttpStatus status = HttpStatus.CREATED;
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.add("message", " bill added successfully.");
+//		return new ResponseEntity<>(billService.addBill(bill), headers, status);
+//	}
 	
 	@RequestMapping(value = "/add-bill", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Bill> addBill(@RequestBody Bill bill) {
-		
-		ResponseEntity<Bill> response = this.sideFunction(bill);
-//		ResponseEntity<Bill> response = new ResponseEntity<>(billService.addBill(bill), headers, status);
+		HttpStatus status = HttpStatus.CREATED;
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("message", " bill added successfully.");
+//		ResponseEntity<Bill> response = this.sideFunction(bill);
+		Bill billl = billService.addBill(bill);
+		ResponseEntity<Bill> response = new ResponseEntity<>(billl, headers, status);
 //		System.out.println(billService.getBillById(bill.getBill_id()));
-		System.out.println(this.getByBillId(bill.getBill_id()));
+		System.out.println(billl);
 //		emailSenderService.sendEmail("anujkotarkar@gmail.com", "Bill Created Sucessfully", "Plz review your bill and pay before due date");
 		return response;
 	}

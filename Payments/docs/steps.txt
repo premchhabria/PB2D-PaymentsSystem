@@ -5,3 +5,7 @@ dont use sop but use logger object
 presentations
 
 demo with agile board and ppt
+
+
+enable swagger2
+docker/doccit

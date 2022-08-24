@@ -3,6 +3,7 @@ package com.payments.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
@@ -23,7 +24,7 @@ public class Bill implements Serializable{
 	private String due_date;
 	private String status;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumns({
 		@JoinColumn(name = "biller_code", referencedColumnName = "biller_code", insertable = false, updatable = false),
 		@JoinColumn(name = "consumer_no", referencedColumnName = "consumer_no", insertable = false, updatable = false)

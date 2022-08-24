@@ -1,6 +1,13 @@
 package com.payments.controller;
 
+import java.io.IOException;import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -14,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.payments.model.Transaction;
+import com.payments.service.CsvExportService;
 import com.payments.service.TransactionService;
 
 @RestController
@@ -21,6 +29,9 @@ import com.payments.service.TransactionService;
 public class TransactionController {
 	@Autowired
 	TransactionService transactionService;
+	
+	@Autowired
+	CsvExportService csvExportService;
 	
 	// http://localhost:9999/mbill/get-all-mbills
 
@@ -44,17 +55,24 @@ public class TransactionController {
 		}
 		
 		@RequestMapping(value = "/get-transaction/{consumer_no}/{biller_code}/{start_date}/{end_date}", method = RequestMethod.GET, produces = { "application/json" })
-		public ResponseEntity<List<Transaction>> getPaymentsWithAllFilters(@PathVariable(name = "consumer_no")int cons, 
+		public ResponseEntity<List<Transaction>> getPaymentsWithAllFilters(HttpServletResponse servletResponse, @PathVariable(name = "consumer_no")int cons, 
 				@PathVariable(name = "biller_code")String biller,
 				@PathVariable(name = "start_date")String startDate,
-				@PathVariable(name = "end_date")String endDate) {
+				@PathVariable(name = "end_date")String endDate) throws IOException {
 			List<Transaction> transactionList = transactionService.getPaymentsWithAllFilters(cons, biller, startDate, endDate);
 			HttpStatus status = HttpStatus.OK;
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("message", "All Filtered Transaction returned successfully.");
 			ResponseEntity<List<Transaction>> response = new ResponseEntity<>(transactionList, headers, status);
+			this.getAllTransactionInCsv(servletResponse, cons, biller, startDate, endDate);
 			return response;
 		}
 		
+		@RequestMapping(path = "/export")
+	    public void getAllTransactionInCsv(HttpServletResponse servletResponse, int consumerId, String billerCode, String startDate, String endDate) throws IOException {
+	        servletResponse.setContentType("text/csv");
+	        servletResponse.addHeader("Content-Disposition","attachment; filename=\"payments.csv\"");
+	        csvExportService.writeEmployeesToCsv(servletResponse.getWriter(), consumerId, billerCode, startDate, endDate);
+	    }
 	
 }
