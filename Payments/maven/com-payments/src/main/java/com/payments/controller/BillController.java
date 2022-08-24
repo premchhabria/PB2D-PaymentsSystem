@@ -1,12 +1,13 @@
 package com.payments.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,12 +15,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.payments.model.Bill;
 import com.payments.service.BillService;
+import com.payments.service.EmailSenderService;
 
 @RestController
 @RequestMapping("/bill")
 public class BillController {
 	@Autowired
 	BillService billService;
+	@Autowired
+	EmailSenderService emailSenderService;
 	@RequestMapping(value = "/get-all-bills", method = RequestMethod.GET, produces = { "application/json" })
 	public ResponseEntity<List<Bill>> getAllBills() {
 		List<Bill> billList = billService.getAllBill();
@@ -39,12 +43,33 @@ public class BillController {
 		return response;
 	}
 	
-	@RequestMapping(value = "/add-bill", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Bill> addBill(@RequestBody Bill bill) {
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public ResponseEntity<Bill> sideFunction(Bill bill){
 		HttpStatus status = HttpStatus.CREATED;
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("message", " bill added successfully.");
-		ResponseEntity<Bill> response = new ResponseEntity<>(billService.addBill(bill), headers, status);
+		return new ResponseEntity<>(billService.addBill(bill), headers, status);
+	}
+	
+	@RequestMapping(value = "/add-bill", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Bill> addBill(@RequestBody Bill bill) {
+		
+		ResponseEntity<Bill> response = this.sideFunction(bill);
+//		ResponseEntity<Bill> response = new ResponseEntity<>(billService.addBill(bill), headers, status);
+//		System.out.println(billService.getBillById(bill.getBill_id()));
+		System.out.println(this.getByBillId(bill.getBill_id()));
+//		emailSenderService.sendEmail("anujkotarkar@gmail.com", "Bill Created Sucessfully", "Plz review your bill and pay before due date");
+		return response;
+	}
+	
+	@RequestMapping(value = "/get-by-bill-id/{bill_id}", method = RequestMethod.GET, produces = { "application/json" })
+	public ResponseEntity<Bill> getByBillId(@PathVariable(name = "bill_id")int billId) {
+		Bill bill = billService.getBillById(billId);
+		HttpStatus status = HttpStatus.OK;
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("message", "All Bills Filter by consumer returned successfully.");
+		System.out.println(bill);
+		ResponseEntity<Bill> response = new ResponseEntity<>(bill, headers, status);
 		return response;
 	}
 	
@@ -61,6 +86,7 @@ public class BillController {
 	@RequestMapping(value = "/get-scheduled-bill/{consumer_no}", method = RequestMethod.GET, produces = { "application/json" })
 	public ResponseEntity<List<Bill>> getScheduleBill(@PathVariable(name = "consumer_no")int cons) {
 		List<Bill> billList = billService.getScheduledBill(cons);
+		System.out.println(billList.get(0).getRegisteredBiller().getAccount().getEmail_id());
 		HttpStatus status = HttpStatus.OK;
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("message", "All Scheduled Bills returned successfully.");

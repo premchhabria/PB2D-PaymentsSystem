@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,7 +25,6 @@ public class TransactionController {
 	// http://localhost:9999/mbill/get-all-mbills
 
 		@RequestMapping(value = "/get-all-transaction", method = RequestMethod.GET, produces = { "application/json" })
-//		@GetMapping("/get-all-mbills")
 		public ResponseEntity<List<Transaction>> getAllMBills() {
 			List<Transaction> transactionList = transactionService.getAllTransaction();
 			HttpStatus status = HttpStatus.OK;
@@ -42,5 +42,19 @@ public class TransactionController {
 			ResponseEntity<Transaction> response = new ResponseEntity<>(transactionService.addTransaction(transaction), headers, status);
 			return response;
 		}
+		
+		@RequestMapping(value = "/get-transaction/{consumer_no}/{biller_code}/{start_date}/{end_date}", method = RequestMethod.GET, produces = { "application/json" })
+		public ResponseEntity<List<Transaction>> getPaymentsWithAllFilters(@PathVariable(name = "consumer_no")int cons, 
+				@PathVariable(name = "biller_code")String biller,
+				@PathVariable(name = "start_date")String startDate,
+				@PathVariable(name = "end_date")String endDate) {
+			List<Transaction> transactionList = transactionService.getPaymentsWithAllFilters(cons, biller, startDate, endDate);
+			HttpStatus status = HttpStatus.OK;
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("message", "All Filtered Transaction returned successfully.");
+			ResponseEntity<List<Transaction>> response = new ResponseEntity<>(transactionList, headers, status);
+			return response;
+		}
+		
 	
 }
