@@ -61,7 +61,7 @@ public class BillController {
 		ResponseEntity<Bill> response = new ResponseEntity<>(billl, headers, status);
 //		System.out.println(billService.getBillById(bill.getBill_id()));
 		System.out.println(billl);
-//		emailSenderService.sendEmail("anujkotarkar@gmail.com", "Bill Created Sucessfully", "Plz review your bill and pay before due date");
+		emailSenderService.sendEmail("anujkotarkar@gmail.com", "Bill Created Sucessfully", "Plz review your bill and pay before due date");
 		return response;
 	}
 	
@@ -89,7 +89,6 @@ public class BillController {
 	@RequestMapping(value = "/get-scheduled-bill/{consumer_no}", method = RequestMethod.GET, produces = { "application/json" })
 	public ResponseEntity<List<Bill>> getScheduleBill(@PathVariable(name = "consumer_no")int cons) {
 		List<Bill> billList = billService.getScheduledBill(cons);
-		System.out.println(billList.get(0).getRegisteredBiller().getAccount().getEmail_id());
 		HttpStatus status = HttpStatus.OK;
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("message", "All Scheduled Bills returned successfully.");

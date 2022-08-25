@@ -1,0 +1,47 @@
+POST /bill/add-bill
+
+{
+    "bill_id": 19,
+    "biller_code":"B011",
+    "consumer_no":134,
+    "amount":1090, 
+    "due_date":"2022-08-30", 
+    "status": "PENDING"
+}
+
+POST /login
+
+{
+  "login_id": 99,
+  "password": "admin"
+}
+
+POST /mbill/add-mbill
+
+{
+  "biller_account_id": 2,
+  "biller_code": "B014",
+  "name": "Voda"
+}
+
+POST /regbiller/add-regbiller
+
+{
+  "biller_id": 5,
+  "biller_code": "B012",
+  "consumer_no": 134,
+  "account_no": 100,
+  "autopay": 1,
+  "autopay_limit": 1000
+}
+
+POST /transaction/add-transaction
+
+{
+    "transaction_id": 4,
+    "account_id":1,
+    "date_time":"2022-08-23T18:25:43-05:00",
+    "amount":1000, 
+    "description":"Mobile Recharge", 
+    "bill_id": 1
+}

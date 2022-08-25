@@ -26,7 +26,6 @@ public class MasterBillerController {
 	// http://localhost:9999/mbill/get-all-mbills
 
 		@RequestMapping(value = "/get-all-mbills", method = RequestMethod.GET, produces = { "application/json" })
-//		@GetMapping("/get-all-mbills")
 		public ResponseEntity<List<MasterBiller>> getAllMBills() {
 			List<MasterBiller> mbillList = mbillService.getAllMasterBillers();
 			HttpStatus status = HttpStatus.OK;

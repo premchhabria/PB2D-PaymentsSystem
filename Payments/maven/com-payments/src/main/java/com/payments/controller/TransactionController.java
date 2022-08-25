@@ -64,15 +64,18 @@ public class TransactionController {
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("message", "All Filtered Transaction returned successfully.");
 			ResponseEntity<List<Transaction>> response = new ResponseEntity<>(transactionList, headers, status);
-			this.getAllTransactionInCsv(servletResponse, cons, biller, startDate, endDate);
+//			this.getAllTransactionInCsv(servletResponse, cons, biller, startDate, endDate);
 			return response;
 		}
 		
-		@RequestMapping(path = "/export")
-	    public void getAllTransactionInCsv(HttpServletResponse servletResponse, int consumerId, String billerCode, String startDate, String endDate) throws IOException {
+		@RequestMapping(value = "/export/{consumer_no}/{biller_code}/{start_date}/{end_date}", method = RequestMethod.GET)
+	    public void getAllTransactionInCsv(HttpServletResponse servletResponse,@PathVariable(name = "consumer_no")int cons, 
+				@PathVariable(name = "biller_code")String biller,
+				@PathVariable(name = "start_date")String startDate,
+				@PathVariable(name = "end_date")String endDate) throws IOException {
 	        servletResponse.setContentType("text/csv");
 	        servletResponse.addHeader("Content-Disposition","attachment; filename=\"payments.csv\"");
-	        csvExportService.writeEmployeesToCsv(servletResponse.getWriter(), consumerId, billerCode, startDate, endDate);
+	        csvExportService.writeEmployeesToCsv(servletResponse.getWriter(), cons, biller, startDate, endDate);
 	    }
 	
 }
